@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>کافه برگ | منو</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- فونت گوگل حذف شد چون بدون فیلترشکن لود نمی‌شد؛ از فونت‌های خود سیستم استفاده می‌کنیم -->
 <style>
   :root{
     --bg:#111411;
@@ -28,7 +27,7 @@
       radial-gradient(ellipse 700px 500px at 100% 10%, rgba(95,143,90,0.08), transparent 60%),
       var(--bg);
     color:var(--fg);
-    font-family:'Vazirmatn', Tahoma, sans-serif;
+    font-family: Tahoma, 'Segoe UI', 'Vazirmatn', Arial, sans-serif;
     min-height:100vh;
     line-height:1.7;
     position:relative;
@@ -369,8 +368,8 @@
     <path d="M24 14C20 16 16 20 15 25" stroke="currentColor" stroke-width="1.2"/>
     <path d="M24 22C28 24 32 28 33 33" stroke="currentColor" stroke-width="1.2"/>
   </svg>
-  <h1 id="cafeNameDisplay">کافه برگ</h1>
-  <div class="tagline" id="taglineDisplay">طعم آرامش، عطر بهار</div>
+  <h1 id="cafeNameDisplay" style="visibility:hidden;">کافه</h1>
+  <div class="tagline" id="taglineDisplay" style="visibility:hidden;">.</div>
 </header>
 
 <nav class="tabs" id="tabsNav"></nav>
@@ -393,7 +392,10 @@
     <h2>ورود مدیریت</h2>
     <div class="sub">برای ویرایش منو، رمز عبور را وارد کنید</div>
     <label>رمز عبور</label>
-    <input type="password" id="passwordInput" placeholder="رمز عبور">
+    <div style="position:relative;">
+      <input type="password" id="passwordInput" placeholder="رمز عبور" style="padding-left:44px;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">
+      <button type="button" id="togglePassword" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--fg-dim); cursor:pointer; font-size:0.78rem; padding:4px 6px;">نمایش</button>
+    </div>
     <div class="error-msg" id="loginError">رمز عبور اشتباه است</div>
     <button class="btn block" id="loginSubmit">ورود</button>
   </div>
@@ -515,8 +517,12 @@ async function saveState(){
 }
 
 function renderAll(){
-  document.getElementById('cafeNameDisplay').textContent = state.cafeName;
-  document.getElementById('taglineDisplay').textContent = state.tagline;
+  const nameEl = document.getElementById('cafeNameDisplay');
+  const tagEl = document.getElementById('taglineDisplay');
+  nameEl.textContent = state.cafeName;
+  tagEl.textContent = state.tagline;
+  nameEl.style.visibility = 'visible';
+  tagEl.style.visibility = 'visible';
   document.title = state.cafeName + ' | منو';
   renderTabs();
   renderMenu();
@@ -575,6 +581,12 @@ loginOverlay.addEventListener('click', (e)=>{ if(e.target===loginOverlay) loginO
 
 document.getElementById('loginSubmit').addEventListener('click', tryLogin);
 document.getElementById('passwordInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryLogin(); });
+document.getElementById('togglePassword').addEventListener('click', ()=>{
+  const inp = document.getElementById('passwordInput');
+  const btn = document.getElementById('togglePassword');
+  if(inp.type === 'password'){ inp.type = 'text'; btn.textContent = 'پنهان'; }
+  else { inp.type = 'password'; btn.textContent = 'نمایش'; }
+});
 
 function tryLogin(){
   const val = document.getElementById('passwordInput').value;
