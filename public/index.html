@@ -1,10 +1,11 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>کافه برگ | منو</title>
-<!-- فونت گوگل حذف شد چون بدون فیلترشکن لود نمی‌شد؛ از فونت‌های خود سیستم استفاده می‌کنیم -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#111411;
@@ -27,7 +28,7 @@
       radial-gradient(ellipse 700px 500px at 100% 10%, rgba(95,143,90,0.08), transparent 60%),
       var(--bg);
     color:var(--fg);
-    font-family: Tahoma, 'Segoe UI', 'Vazirmatn', Arial, sans-serif;
+    font-family:'Vazirmatn', Tahoma, sans-serif;
     min-height:100vh;
     line-height:1.7;
     position:relative;
@@ -368,8 +369,8 @@
     <path d="M24 14C20 16 16 20 15 25" stroke="currentColor" stroke-width="1.2"/>
     <path d="M24 22C28 24 32 28 33 33" stroke="currentColor" stroke-width="1.2"/>
   </svg>
-  <h1 id="cafeNameDisplay" style="visibility:hidden;">کافه</h1>
-  <div class="tagline" id="taglineDisplay" style="visibility:hidden;">.</div>
+  <h1 id="cafeNameDisplay">کافه برگ</h1>
+  <div class="tagline" id="taglineDisplay">طعم آرامش، عطر بهار</div>
 </header>
 
 <nav class="tabs" id="tabsNav"></nav>
@@ -517,12 +518,8 @@ async function saveState(){
 }
 
 function renderAll(){
-  const nameEl = document.getElementById('cafeNameDisplay');
-  const tagEl = document.getElementById('taglineDisplay');
-  nameEl.textContent = state.cafeName;
-  tagEl.textContent = state.tagline;
-  nameEl.style.visibility = 'visible';
-  tagEl.style.visibility = 'visible';
+  document.getElementById('cafeNameDisplay').textContent = state.cafeName;
+  document.getElementById('taglineDisplay').textContent = state.tagline;
   document.title = state.cafeName + ' | منو';
   renderTabs();
   renderMenu();
@@ -712,4 +709,4 @@ document.getElementById('saveMenuBtn').addEventListener('click', async ()=>{
 loadState();
 </script>
 </body>
-  </html>
+    </html>
